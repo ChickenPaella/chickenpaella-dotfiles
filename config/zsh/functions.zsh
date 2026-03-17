@@ -1,0 +1,200 @@
+# ── zsh 함수 모음 ─────────────────────────────────────────────
+# .zshrc에서 source됨
+
+# ── vi 모드 커서: 입력=막대, 명령=블록 ───────────────────────
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]]; then
+    echo -ne '\e[1 q'  # 블록
+  else
+    echo -ne '\e[5 q'  # 막대
+  fi
+}
+zle -N zle-keymap-select
+
+# ── Magic 약어: 스페이스바로 파이프 자동 완성 ──────────────────
+# 예: ls G<Space> → ls | grep
+setopt extended_glob
+typeset -A abbreviations
+abbreviations=(
+  "G"  "| grep"
+  "X"  "| xargs"
+  "T"  "| tail"
+  "W"  "| wc"
+  "A"  "| awk"
+  "S"  "| sed"
+  "N"  "> /dev/null"
+)
+function magic-abbrev-expand () {
+  local MATCH
+  LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9]#}
+  LBUFFER+=${abbreviations[$MATCH]:-$MATCH}
+  zle self-insert
+}
+function no-magic-abbrev-expand () { LBUFFER+=' ' }
+zle -N magic-abbrev-expand
+zle -N no-magic-abbrev-expand
+bindkey " " magic-abbrev-expand
+bindkey "^x " no-magic-abbrev-expand
+
+# ── fzf 최근 디렉토리 이동 (Ctrl+E) ──────────────────────────
+if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]]; then
+  autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+  add-zsh-hook chpwd chpwd_recent_dirs
+  zstyle ':chpwd:*' recent-dirs-default true
+  zstyle ':chpwd:*' recent-dirs-max 1000
+  zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/chpwd-recent-dirs"
+fi
+function fzf-cdr () {
+  local preview_cmd
+  if command -v eza &>/dev/null; then
+    preview_cmd='eza -la --color=always {}'
+  else
+    preview_cmd='ls -la {}'
+  fi
+  local selected_dir="$(cdr -l | sed 's/^[0-9]\+ \+//' | fzf -q "$LBUFFER" --prompt 'cd > ' +s --preview "$preview_cmd")"
+  if [ -n "$selected_dir" ]; then
+    BUFFER=" cd ${selected_dir}"
+    zle accept-line
+  else
+    BUFFER=''
+    zle accept-line
+  fi
+}
+zle -N fzf-cdr
+bindkey '^E' fzf-cdr
+
+# ── tvim: tmux 세션 + nvim 통합 ───────────────────────────────
+function tvim() {
+  local dir="${1:-.}"
+  cd "$dir"
+  local workdir="$(basename $PWD)"
+  if tmux has-session -t "=$workdir" 2>/dev/null; then
+    tmux switch-client -t "$workdir" 2>/dev/null || tmux attach -t "$workdir"
+    return 0
+  fi
+  tmux new-session -s "$workdir" -d
+  tmux send-keys -t "$workdir" "nvim ." ENTER
+  tmux switch-client -t "$workdir" 2>/dev/null || tmux attach -t "$workdir"
+}
+
+# ── 압축 해제 (tar/zip/gz 등 자동 감지) ──────────────────────
+function ex () {
+  for filename in "$@"; do
+    if [ -f "$filename" ]; then
+      case "$filename" in
+        *.tar.bz2) tar xjf "$filename" ;;
+        *.tar.gz)  tar xzf "$filename" ;;
+        *.tar.xz)  tar xf  "$filename" ;;
+        *.bz2)     bunzip2 "$filename" ;;
+        *.gz)      gunzip  "$filename" ;;
+        *.tar)     tar xf  "$filename" ;;
+        *.zip)     unzip   "$filename" ;;
+        *.7z)      7z x    "$filename" ;;
+        *.rar)     unrar x "$filename" ;;
+        *)         echo "'$filename' 압축 해제 불가" ;;
+      esac
+    else
+      echo "'$filename' 파일 없음"
+    fi
+  done
+}
+
+# ── cd 오버라이드: Python 가상환경 자동 활성화/비활성화 ────────
+function cd () {
+  builtin cd "$@" || return
+  if [[ -f ".venv/bin/activate" ]]; then
+    source .venv/bin/activate
+  elif [[ -f "venv/bin/activate" ]]; then
+    source venv/bin/activate
+  elif [[ -f "pyproject.toml" ]] && command -v poetry &>/dev/null; then
+    local venv_path="$(poetry env info --path 2>/dev/null)"
+    if [[ -n "$venv_path" && -f "$venv_path/bin/activate" ]]; then
+      source "$venv_path/bin/activate"
+    fi
+  elif [[ -n "$VIRTUAL_ENV" ]]; then
+    local venv_parent="$(dirname "$VIRTUAL_ENV")"
+    if [[ "$PWD" != "$venv_parent"* ]]; then
+      deactivate 2>/dev/null
+    fi
+  fi
+}
+
+# ── HTTP 서버 ─────────────────────────────────────────────────
+function serve () {
+  local port="${1:-8000}"
+  echo "http://localhost:${port} 에서 서버 시작"
+  python3 -m http.server "$port"
+}
+
+# ── 명령어 설명 (man + tldr 통합) ────────────────────────────
+function def () {
+  if command -v tldr &>/dev/null; then
+    tldr "$1" 2>/dev/null || man "$1"
+  else
+    man "$1"
+  fi
+}
+
+# ── 안전 삭제: 휴지통으로 이동 ───────────────────────────────
+function trm () {
+  if command -v trash &>/dev/null; then
+    trash "$@"
+  else
+    echo "trash 미설치. brew install trash 로 설치하세요"
+    echo "삭제하지 않았습니다: $@"
+  fi
+}
+
+# ── 웹 검색 ──────────────────────────────────────────────────
+function s () {
+  open "https://duckduckgo.com/?q=$(echo "$@" | sed 's/ /+/g')"
+}
+function sg () {
+  open "https://www.google.com/search?q=$(echo "$@" | sed 's/ /+/g')"
+}
+
+# ── Bazel 래퍼 ───────────────────────────────────────────────
+function br () {
+  local p="$(realpath --relative-to="$PWD" "$1")" j="$2" s='2'
+  if [ -z "$j" ] && [[ -f "$p" ]]; then j="${p:t:r}"; p="$(dirname "$p")"; s='1'; fi
+  ([ -z "$p" ] || [ -z "$j" ]) && echo "사용법: br <경로> <타겟>" && return
+  shift "$s"
+  echo "$ bazel run //${p}:${j} $@"
+  bazel run "//${p}:${j}" "$@"
+}
+function bt () {
+  local p="$(realpath --relative-to="$PWD" "$1")"
+  [ -z "$p" ] && echo "사용법: bt <경로>" && return
+  shift 1
+  echo "$ bazel test //${p} $@"
+  bazel test "//${p}" "$@"
+}
+
+# ── kubectl 래퍼 ─────────────────────────────────────────────
+function k () {
+  if [[ -n "$CONTEXT" && -n "$NAMESPACE" && "$#" -gt 0 ]]; then
+    kubectl --context="$CONTEXT" -n "$NAMESPACE" "$@"
+  else
+    kubectl "$@"
+  fi
+}
+function klogf () {
+  local pod="$(k get pods -o name | grep "$1" | head -n 1 | cut -d '/' -f 2)"
+  [ -z "$pod" ] && echo "Pod 없음: $1" && return 1
+  shift 1
+  k logs -f "$pod" "$@"
+}
+
+# ── JWT 디코딩 ────────────────────────────────────────────────
+function jwtd () {
+  echo "${1}" | jq -R 'split(".") | .[0],.[1] | @base64d | fromjson'
+}
+function jwtx () {
+  local token="$1"
+  echo "=== Header ===" && echo "$token" | jq -R 'split(".") | .[0] | @base64d | fromjson'
+  echo "=== Payload ===" && echo "$token" | jq -R 'split(".") | .[1] | @base64d | fromjson'
+  local exp=$(echo "$token" | jq -R 'split(".") | .[1] | @base64d | fromjson | .exp // empty' 2>/dev/null)
+  if [[ -n "$exp" ]]; then
+    echo "=== 만료시간 ===" && date -r "$exp" 2>/dev/null || date -d "@$exp" 2>/dev/null
+  fi
+}
