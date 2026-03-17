@@ -26,7 +26,8 @@ M.tools = {
   "pylint",
   "yamllint",
   "shellcheck",
-  "jsonnet-language-server",
+  -- jsonnet-language-server: Mason 빌드 불가 (Go 미설치)
+  -- ~/.local/bin/jsonnet-language-server 바이너리 직접 설치됨
 
   -- Formatters
   "autopep8",

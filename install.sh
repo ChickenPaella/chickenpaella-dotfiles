@@ -75,6 +75,8 @@ link() {
 echo "\n🔗 심볼릭 링크 생성 중..."
 link config/zsh/.zshenv         ~/.zshenv
 link config/zsh/.zshrc          ~/.zshrc
+# ZDOTDIR=~/.config/zsh 이므로 zsh가 이 경로에서 .zshrc를 찾음
+link config/zsh/.zshrc          ~/.config/zsh/.zshrc
 link config/tmux/tmux.conf      ~/.config/tmux/tmux.conf
 link config/git/config          ~/.config/git/config
 link config/git/ignore          ~/.config/git/ignore

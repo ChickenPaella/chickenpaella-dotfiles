@@ -15,7 +15,7 @@ export KEYTIMEOUT=1
 bindkey -M viins 'jk' vi-cmd-mode  # jk로 normal 모드
 bindkey '^k' up-history
 bindkey '^j' down-history
-bindkey -M viins '^y' autosuggest-accept
+bindkey -M viins '\ey' autosuggest-accept
 
 # Ctrl+S XOFF 비활성화 (tmux prefix Ctrl+S 충돌 방지)
 stty -ixon 2>/dev/null
@@ -39,20 +39,24 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 # ── 플러그인 ──────────────────────────────────────────────────
-# zsh-syntax-highlighting
-for f in \
-  /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
-  /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh; do
-  [[ -f "$f" ]] && source "$f" && break
-done
-
-# zsh-autosuggestions
+# zsh-autosuggestions (syntax-highlighting보다 먼저 로드)
 for f in \
   "$(brew --prefix 2>/dev/null)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" \
   /usr/share/zsh-autosuggestions/autosuggestions.zsh; do
   [[ -f "$f" ]] && source "$f" && break
 done
-bindkey '^y' autosuggest-accept
+# Alt+Y로 추천 수락 (WezTerm send_composed_key=false → Alt가 \ey 전송)
+bindkey '\ey' autosuggest-accept
+bindkey -M viins '\ey' autosuggest-accept
+# Gruvbox 배경에서 추천 텍스트 가시성 향상 (기본 fg=8 대신 명시적 지정)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#928374'
+
+# zsh-syntax-highlighting (항상 마지막에 로드)
+for f in \
+  /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh; do
+  [[ -f "$f" ]] && source "$f" && break
+done
 
 # fzf
 if command -v fzf &>/dev/null; then

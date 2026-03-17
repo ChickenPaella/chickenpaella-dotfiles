@@ -4,9 +4,13 @@
 # ── CLI 도구 대체 (설치된 경우에만) ──────────────────────────
 if command -v eza &>/dev/null; then
   alias ls='eza'
+  alias l='eza -l'
   alias ll='eza -la --git'
   alias la='eza -la'
   alias lt='eza --tree --level=2'
+else
+  alias l='ls -lh'
+  alias ll='ls -lah'
 fi
 if command -v bat &>/dev/null; then
   alias cat='bat --style=plain'
