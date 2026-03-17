@@ -3,7 +3,7 @@ local config = {}
 
 config.font = wezterm.font('JetBrainsMono Nerd Font')
 config.font_size = 14.0
-config.color_scheme = 'PaperColorDark (Gogh)'
+config.color_scheme = 'GruvboxDark'
 config.window_background_opacity = 0.95
 config.hide_tab_bar_if_only_one_tab = true
 config.tab_bar_at_bottom = true
