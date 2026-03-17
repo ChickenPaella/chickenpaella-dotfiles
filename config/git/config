@@ -1,0 +1,84 @@
+[core]
+	editor = nvim
+	autocrlf = input
+
+# ── 성능 최적화 ───────────────────────────────────────────────
+[core]
+	fsmonitor = true
+	untrackedCache = true
+
+# ── 브랜치 기본값 ─────────────────────────────────────────────
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = false
+
+[rerere]
+	enabled = true
+
+# ── 전역 gitignore ────────────────────────────────────────────
+[core]
+	excludesFile = ~/.config/git/ignore
+
+# ── 기본 단축어 ───────────────────────────────────────────────
+[alias]
+	# 상태
+	s  = status
+	ss = status --short
+
+	# 브랜치
+	co = checkout
+	sw = switch
+	br = branch
+	main = !git switch main 2>/dev/null || git switch master
+
+	# 커밋
+	ci = commit
+	ca = commit --amend
+	ce = commit --allow-empty
+
+	# 스테이징
+	a  = add
+	aa = add --all
+	ap = add --patch
+
+	# 푸시/풀
+	ps  = push
+	pl  = pull
+	psf = push --force-with-lease
+	psu = push --set-upstream origin HEAD
+
+	# Diff
+	d  = diff
+	dc = diff --cached
+	ds = diff --stat
+
+	# 로그
+	hist = log --oneline --graph --all --decorate
+	llog = log --pretty=fuller
+	last = log -1 HEAD --stat
+
+	# Rebase
+	ri = rebase -i
+	rc = rebase --continue
+	ra = rebase --abort
+	rs = rebase --skip
+
+	# Stash
+	st  = stash
+	stp = stash pop
+	stl = stash list
+
+	# 찾기
+	find = log -S
+
+	# 머지 충돌 처리
+	edit-unmerged = !git diff --name-only --diff-filter=U | xargs $EDITOR
+	add-unmerged  = !git diff --name-only --diff-filter=U | xargs git add
+
+	# PR 체크아웃 (gh 사용)
+	gpr = !gh pr checkout
+
+	# 최근 브랜치 목록
+	recent = branch --sort=-committerdate --format='%(refname:short)' | head -10

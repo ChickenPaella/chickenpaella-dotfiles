@@ -1,0 +1,79 @@
+# AeroSpace 설정
+# 키보드 중심 워크플로우, vim 스타일 키바인딩
+
+start-at-login = true
+
+# ── sketchybar 연동: 워크스페이스 변경 시 알림 ─────────────
+exec-on-workspace-change = [
+  'sketchybar',
+  '--trigger', 'aerospace_workspace_change',
+  'AEROSPACE_FOCUSED_WORKSPACE=%{focused-workspace}',
+  'AEROSPACE_PREV_WORKSPACE=%{prev-workspace}',
+]
+
+[gaps]
+inner.horizontal = 8
+inner.vertical   = 8
+outer.left       = 8
+outer.bottom     = 8
+outer.top        = 8
+outer.right      = 8
+
+[mode.main.binding]
+
+# ── 포커스 이동 (Alt+hjkl) ──────────────────────────────────
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# ── 윈도우 이동 (Alt+Shift+hjkl) ───────────────────────────
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# ── 레이아웃 ────────────────────────────────────────────────
+alt-f         = 'fullscreen'
+alt-shift-f   = 'layout floating tiling'
+alt-shift-e   = 'layout h_accordion v_accordion'  # 분할 방향 전환
+alt-shift-b   = 'balance-sizes'
+
+# ── 크기 조절 ───────────────────────────────────────────────
+alt-shift-minus = 'resize smart -50'
+alt-shift-equal = 'resize smart +50'
+
+# ── 워크스페이스 전환 (Alt+1-6) ────────────────────────────
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+alt-6 = 'workspace 6'
+
+# ── 윈도우를 워크스페이스로 이동 (Alt+Shift+1-6) ──────────
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
+alt-shift-6 = 'move-node-to-workspace 6'
+
+# ── 모니터 이동 ─────────────────────────────────────────────
+alt-n         = 'focus-monitor next'
+alt-p         = 'focus-monitor prev'
+# 창 이동 + 포커스 동시 이동 (alt-shift-n 시스템 충돌 우려로 alt-. / alt-, 사용)
+alt-period    = ['move-node-to-monitor next', 'focus-monitor next']
+alt-comma     = ['move-node-to-monitor prev', 'focus-monitor prev']
+
+# ── 서비스 모드 진입 ────────────────────────────────────────
+alt-shift-semicolon = 'mode service'
+
+# ── 서비스 모드 (레이아웃 조작) ────────────────────────────
+[mode.service.binding]
+esc           = 'mode main'
+alt-shift-h   = 'join-with left'
+alt-shift-j   = 'join-with down'
+alt-shift-k   = 'join-with up'
+alt-shift-l   = 'join-with right'
+r             = ['flatten-workspace-tree', 'mode main']

@@ -1,0 +1,13 @@
+# 비밀 / 로컬 전용
+config/zsh/local_rc.zsh
+**/.env
+**/*.key
+**/*.pem
+**/secrets.json
+
+# nvim 런타임 (설치 시 자동 생성)
+config/nvim/lazy-lock.json
+config/nvim/.DS_Store
+
+# 시스템
+.DS_Store

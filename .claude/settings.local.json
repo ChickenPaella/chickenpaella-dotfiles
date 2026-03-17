@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls ~/.config/nvim/lua/plugins/snacks/ && cat ~/.config/nvim/lua/plugins/snacks/*.lua 2>/dev/null)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(brew list:*)",
+      "Bash(brew install:*)",
+      "Bash(brew tap:*)",
+      "Bash(chmod +x ~/.config/sketchybar/sketchybarrc ~/.config/sketchybar/plugins/*.sh)",
+      "Bash(yabai --stop-service 2>/dev/null; skhd --stop-service 2>/dev/null; echo \"yabai/skhd 중지 완료\")",
+      "Bash(brew services:*)",
+      "Bash(chmod +x ~/.config/sketchybar/plugins/workspace.sh && brew services restart felixkratz/formulae/sketchybar 2>&1)",
+      "Bash(tmux -V)",
+      "Bash(curl -s https://raw.githubusercontent.com/ChickenPaella/dotfiles/main/config/zsh/aliases_rc.zsh)",
+      "Read(//Users/h-lee/.config/tmux/**)",
+      "Read(//Users/h-lee/**)",
+      "WebFetch(domain:conductor.build)",
+      "Bash(git config:*)",
+      "Bash(# 설정 파일들을 dotfiles로 복사\ncp ~/.zshrc ~/dotfiles/config/zsh/.zshrc\ncp ~/.config/tmux/tmux.conf ~/dotfiles/config/tmux/tmux.conf\ncp ~/.config/wezterm/wezterm.lua ~/dotfiles/config/wezterm/wezterm.lua\ncp ~/.config/aerospace/aerospace.toml ~/dotfiles/config/aerospace/aerospace.toml\ncp ~/.config/git/config ~/dotfiles/config/git/config\ncp ~/.config/git/ignore ~/dotfiles/config/git/ignore\n\n# nvim은 디렉토리째로 rsync\nrsync -a --exclude='.git' ~/.config/nvim/ ~/dotfiles/config/nvim/\n\necho \"복사 완료\")",
+      "Bash(gh auth:*)",
+      "Bash(gh repo:*)"
+    ]
+  }
+}
