@@ -13,14 +13,16 @@ return {
       })
 
       -- 디렉토리로 nvim 시작 시 파일 트리 자동 열기
-      local function open_nvim_tree(data)
-        local is_dir = vim.fn.isdirectory(data.file) == 1
-        if is_dir then
+      vim.api.nvim_create_autocmd("VimEnter", {
+        callback = function(data)
+          if vim.fn.isdirectory(data.file) ~= 1 then return end
+          -- 디렉토리 버퍼를 빈 버퍼로 교체 후 트리 열기
+          vim.cmd.enew()
+          vim.cmd.bw(data.buf)
           vim.cmd.cd(data.file)
           require("nvim-tree.api").tree.open()
-        end
-      end
-      vim.api.nvim_create_autocmd("VimEnter", { callback = open_nvim_tree })
+        end,
+      })
     end,
   },
 }
