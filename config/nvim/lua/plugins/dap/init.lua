@@ -44,9 +44,13 @@ return {
       {
         "mfussenegger/nvim-dap-python",
         config = function()
-          -- Mason이 설치한 debugpy 경로
-          local debugpy = require("mason-registry").get_package("debugpy"):get_install_path()
-          require("dap-python").setup(debugpy .. "/venv/bin/python")
+          -- Mason debugpy → 시스템 python3 순서로 fallback
+          local python = vim.fn.exepath("python3") or "python3"
+          local ok, registry = pcall(require, "mason-registry")
+          if ok and registry.is_installed("debugpy") then
+            python = registry.get_package("debugpy"):get_install_path() .. "/venv/bin/python"
+          end
+          require("dap-python").setup(python)
         end,
       },
     },
