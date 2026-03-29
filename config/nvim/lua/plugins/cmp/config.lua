@@ -86,6 +86,7 @@ M.config = function()
     },
     mapping = require("plugins.cmp.keymaps"),
     sources = cmp.config.sources({
+      { name = "codeium" },
       { name = "nvim_lsp", keyword_length = 3 },
       { name = "luasnip" },
       { name = "neorg" },

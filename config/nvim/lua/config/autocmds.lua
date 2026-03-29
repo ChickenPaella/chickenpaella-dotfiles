@@ -6,8 +6,7 @@
 --
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
--- 키보드 멈춤 시 자동 저장 (updatetime 후 트리거)
-vim.opt.updatetime = 1000  -- 1초 후 CursorHold 발생
+-- 키보드 멈춤 시 자동 저장
 vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
   pattern = "*",
   callback = function()
