@@ -40,19 +40,8 @@ return {
       },
       -- 중단점 아이콘 표시
       "theHamsta/nvim-dap-virtual-text",
-      -- Python DAP 어댑터 (Mason의 debugpy 연결)
-      {
-        "mfussenegger/nvim-dap-python",
-        config = function()
-          -- Mason debugpy → 시스템 python3 순서로 fallback
-          local python = vim.fn.exepath("python3") or "python3"
-          local ok, registry = pcall(require, "mason-registry")
-          if ok and registry.is_installed("debugpy") then
-            python = registry.get_package("debugpy"):get_install_path() .. "/venv/bin/python"
-          end
-          require("dap-python").setup(python)
-        end,
-      },
+      -- Python DAP 어댑터 (F5 등 실제 디버그 실행 시점에 setup)
+      "mfussenegger/nvim-dap-python",
     },
     config = function()
       require("nvim-dap-virtual-text").setup({ commented = true })

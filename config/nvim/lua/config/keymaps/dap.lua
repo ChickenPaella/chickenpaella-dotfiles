@@ -22,9 +22,23 @@ M.create_keymaps = function()
   map("n", "<leader>de", function() require("dapui").eval() end,       { desc = "표현식 평가" })
   map("v", "<leader>de", function() require("dapui").eval() end,       { desc = "선택 영역 평가" })
 
-  -- ── Python 전용 ──────────────────────────────────────────────
-  map("n", "<leader>dm", function() require("dap-python").test_method() end,  { desc = "현재 메서드 디버그" })
-  map("n", "<leader>dC", function() require("dap-python").test_class() end,   { desc = "현재 클래스 디버그" })
+  -- ── Python 전용 (첫 호출 시 dap-python setup) ───────────────
+  local function dap_python(method)
+    local ok, dapy = pcall(require, "dap-python")
+    if not ok then return end
+    if not dapy._setup_done then
+      local python = vim.fn.exepath("python3") or "python3"
+      local rok, registry = pcall(require, "mason-registry")
+      if rok and registry.is_installed("debugpy") then
+        python = registry.get_package("debugpy"):get_install_path() .. "/venv/bin/python"
+      end
+      dapy.setup(python)
+      dapy._setup_done = true
+    end
+    dapy[method]()
+  end
+  map("n", "<leader>dm", function() dap_python("test_method") end, { desc = "현재 메서드 디버그" })
+  map("n", "<leader>dC", function() dap_python("test_class") end,  { desc = "현재 클래스 디버그" })
 end
 
 return M
