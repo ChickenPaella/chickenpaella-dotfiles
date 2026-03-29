@@ -1,18 +1,12 @@
 return {
-  "supermaven-inc/supermaven-nvim",
+  "Exafunction/codeium.vim",
   event = "InsertEnter",
   config = function()
-    require("supermaven-nvim").setup({
-      keymaps = {
-        accept_suggestion = "<A-]>",   -- Alt+] 로 제안 수락
-        clear_suggestion  = "<A-[>",   -- Alt+[ 로 제안 거절
-        accept_word       = "<A-n>",   -- Alt+n 으로 단어 단위 수락
-      },
-      ignore_filetypes = { "TelescopePrompt" },
-      color = {
-        suggestion_color = "#928374",  -- Gruvbox gray
-      },
-      log_level = "off",
-    })
+    vim.keymap.set("i", "<A-]>", function() return vim.fn["codeium#Accept"]() end,
+      { expr = true, silent = true, desc = "Codeium 제안 수락" })
+    vim.keymap.set("i", "<A-[>", function() return vim.fn["codeium#Clear"]() end,
+      { expr = true, silent = true, desc = "Codeium 제안 거절" })
+    vim.keymap.set("i", "<A-n>", function() return vim.fn["codeium#CycleCompletions"](1) end,
+      { expr = true, silent = true, desc = "다음 Codeium 제안" })
   end,
 }
