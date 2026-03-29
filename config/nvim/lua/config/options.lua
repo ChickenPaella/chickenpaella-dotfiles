@@ -12,6 +12,7 @@ vim.opt.titlestring = "nvim"
 -- ファイル
 vim.opt.fileencoding = "utf-8" -- エンコーディングをUTF-8に設定
 vim.opt.swapfile = false       -- スワップファイルを作成しない
+vim.opt.autowrite = true       -- 자동 저장 (버퍼 이동/실행 시)
 -- vim.opt.helplang = "ja" -- ヘルプファイルの言語は日本語
 vim.opt.hidden = true          -- バッファを切り替えるときに
 --ファイルを保存しなくてもOKに
