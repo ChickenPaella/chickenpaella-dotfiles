@@ -4,13 +4,13 @@ M.create_keymaps = function()
   -- Insert mode에서 jk로 Normal 모드 전환
   vim.keymap.set("i", "jk", "<Esc>", { desc = "Normal 모드로" })
 
-  -- 행 이동: H (첫 비공백 문자), L (행 끝)
-  vim.keymap.set({ "n", "v" }, "H", "^", { desc = "행 첫 문자로" })
-  vim.keymap.set({ "n", "v" }, "L", "$", { desc = "행 끝으로" })
+  -- 행 이동: H (첫 비공백 문자), L (행 끝) — o 포함으로 dL, cL 등도 동작
+  vim.keymap.set({ "n", "v", "o" }, "H", "^", { desc = "행 첫 문자로" })
+  vim.keymap.set({ "n", "v", "o" }, "L", "$", { desc = "행 끝으로" })
 
   -- 단락 이동: J/K (꾹 눌러서 연속 이동, LazyVim 기본 join/hover 덮어씀)
-  vim.keymap.set({ "n", "v" }, "J", "}", { desc = "다음 단락" })
-  vim.keymap.set({ "n", "v" }, "K", "{", { desc = "이전 단락" })
+  vim.keymap.set({ "n", "v", "o" }, "J", "}", { desc = "다음 단락" })
+  vim.keymap.set({ "n", "v", "o" }, "K", "{", { desc = "이전 단락" })
 
   -- 검색 하이라이트 제거
   vim.keymap.set("n", "<leader>nh", ":noh<CR>", { desc = "검색 하이라이트 제거" })

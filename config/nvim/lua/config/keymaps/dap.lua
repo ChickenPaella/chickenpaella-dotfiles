@@ -4,7 +4,8 @@ M.create_keymaps = function()
   local map = vim.keymap.set
 
   -- ── 실행 제어 ────────────────────────────────────────────────
-  map("n", "<F5>",  function() require("dap").continue() end,          { desc = "디버그 시작/계속" })
+  map("n", "<F5>",        function() require("dap").continue() end, { desc = "디버그 시작/계속" })
+  map("n", "<leader>dc", function() require("dap").continue() end, { desc = "디버그 시작/계속" })
   map("n", "<F10>", function() require("dap").step_over() end,         { desc = "Step Over" })
   map("n", "<F11>", function() require("dap").step_into() end,         { desc = "Step Into" })
   map("n", "<F12>", function() require("dap").step_out() end,          { desc = "Step Out" })

@@ -16,10 +16,12 @@ return {
             -- pytest 기본 사용, unittest 자동 감지
             runner = "pytest",
             python = function()
-              -- poetry/venv 환경 자동 감지
-              local ok, env = pcall(require, "utils.python_env")
-              if ok then return env.get_python_path() end
-              return vim.fn.exepath("python3") or "python3"
+              -- venv가 있으면 사용, 없으면 시스템 python3
+              local venv = vim.fn.expand("~/.venv/bin/python")
+              if vim.fn.executable(venv) == 1 then return venv end
+              venv = vim.fn.expand("~/venv/bin/python")
+              if vim.fn.executable(venv) == 1 then return venv end
+              return vim.fn.exepath("python3")
             end,
           }),
         },

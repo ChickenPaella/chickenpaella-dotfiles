@@ -33,6 +33,8 @@ brew install \
   jq \
   gh \
   tree \
+  lazygit \
+  ruff \
   zsh-autosuggestions \
   zsh-syntax-highlighting
 

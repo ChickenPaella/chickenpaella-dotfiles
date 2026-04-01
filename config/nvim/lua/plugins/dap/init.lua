@@ -50,6 +50,12 @@ return {
       vim.fn.sign_define("DapBreakpoint",          { text = "●", texthl = "DiagnosticError" })
       vim.fn.sign_define("DapBreakpointCondition", { text = "◐", texthl = "DiagnosticWarn" })
       vim.fn.sign_define("DapStopped",             { text = "▶", texthl = "DiagnosticOk", linehl = "CursorLine" })
+
+      -- Python DAP 어댑터 설정 (debugpy는 Mason으로 설치됨)
+      pcall(function()
+        local debugpy_path = vim.fn.expand("~/.local/share/nvim/mason/packages/debugpy/venv/bin/python")
+        require("dap-python").setup(debugpy_path)
+      end)
     end,
   },
 }

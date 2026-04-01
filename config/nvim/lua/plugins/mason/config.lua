@@ -22,7 +22,7 @@ M.tools = {
   "eslint_d",
   -- "flake8", -- if using flake8 instead of ruff
   "markdownlint",
-  "mypy",
+  -- "mypy", -- pip install mypy 사용
   "pylint",
   "yamllint",
   "shellcheck",

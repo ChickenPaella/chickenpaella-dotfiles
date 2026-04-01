@@ -2,8 +2,8 @@ local M = {}
 
 M.create_keymaps = function()
   vim.keymap.set("n", "<leader>gg", function()
-    require("neogit").open()
-  end, { desc = "Open Neogit" })
+    Snacks.lazygit()
+  end, { desc = "Lazygit" })
 end
 
 return M
