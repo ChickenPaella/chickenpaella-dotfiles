@@ -11,7 +11,7 @@ source "$ZSH/oh-my-zsh.sh"
 
 # ── vi 모드 (oh-my-zsh 로드 후 설정) ─────────────────────────
 bindkey -v
-export KEYTIMEOUT=5
+export KEYTIMEOUT=10
 bindkey -M viins 'jk' vi-cmd-mode  # jk로 normal 모드
 bindkey '^k' up-history
 bindkey '^j' down-history
