@@ -12,6 +12,12 @@ M.create_keymaps = function()
   vim.keymap.set({ "n", "v", "o" }, "J", "}", { desc = "다음 단락" })
   vim.keymap.set({ "n", "v", "o" }, "K", "{", { desc = "이전 단락" })
 
+  -- 검색 이동 시 화면 중앙 정렬
+  vim.keymap.set("n", "n", "nzz", { desc = "다음 검색 결과 (중앙)" })
+  vim.keymap.set("n", "N", "Nzz", { desc = "이전 검색 결과 (중앙)" })
+  vim.keymap.set("n", "*", "*zz", { desc = "단어 검색 (중앙)" })
+  vim.keymap.set("n", "#", "#zz", { desc = "단어 역검색 (중앙)" })
+
   -- 검색 하이라이트 제거
   vim.keymap.set("n", "<leader>nh", ":noh<CR>", { desc = "검색 하이라이트 제거" })
 
