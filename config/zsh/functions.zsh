@@ -15,8 +15,6 @@ zle -N zle-keymap-select
 # H/L: 줄 처음/끝 (nvim의 H/L과 동일)
 bindkey -M vicmd 'H' beginning-of-line
 bindkey -M vicmd 'L' end-of-line
-# jk: insert → normal 모드 (nvim의 jk와 동일)
-bindkey -M viins 'jk' vi-cmd-mode
 
 # ── Magic 약어: 스페이스바로 파이프 자동 완성 ──────────────────
 # 예: ls G<Space> → ls | grep
