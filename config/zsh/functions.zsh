@@ -11,10 +11,12 @@ function zle-keymap-select {
 }
 zle -N zle-keymap-select
 
-# ── vi 모드 J/K: 히스토리 탐색 (end-of-buffer 기본값 덮어쓰기) ──
-# nvim에서 J/K는 단락 이동이지만 터미널에선 의미없음 → j/k와 동일하게
-bindkey -M vicmd 'J' down-line-or-history
-bindkey -M vicmd 'K' up-line-or-history
+# ── vi 모드 커서 이동: nvim 스타일 ──────────────────────────────
+# H/L: 줄 처음/끝 (nvim의 H/L과 동일)
+bindkey -M vicmd 'H' beginning-of-line
+bindkey -M vicmd 'L' end-of-line
+# jk: insert → normal 모드 (nvim의 jk와 동일)
+bindkey -M viins 'jk' vi-cmd-mode
 
 # ── Magic 약어: 스페이스바로 파이프 자동 완성 ──────────────────
 # 예: ls G<Space> → ls | grep
