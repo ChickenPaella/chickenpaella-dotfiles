@@ -191,6 +191,42 @@ function klogf () {
   k logs -f "$pod" "$@"
 }
 
+# ── Git Worktree 관리 ────────────────────────────────────────
+# wt           : worktree 목록
+# wtadd <브랜치> : 새 worktree 생성 (../프로젝트-브랜치명 디렉토리)
+# wtrm <브랜치>  : worktree 삭제
+# wts          : fzf로 worktree 선택 후 이동
+function wt () {
+  git worktree list
+}
+function wtadd () {
+  [ -z "$1" ] && echo "사용법: wtadd <브랜치명>" && return 1
+  local branch="$1"
+  local root="$(git rev-parse --show-toplevel)"
+  local project="$(basename "$root")"
+  local safe_branch="${branch//\//-}"   # feat/login → feat-login
+  local target="$(dirname "$root")/${project}__${safe_branch}"
+  if git show-ref --verify --quiet "refs/heads/$branch"; then
+    git worktree add "$target" "$branch"
+  else
+    git worktree add -b "$branch" "$target"
+  fi
+  echo "→ $target"
+}
+function wtrm () {
+  [ -z "$1" ] && echo "사용법: wtrm <브랜치명>" && return 1
+  local branch="$1"
+  local target
+  target=$(git worktree list | awk -v b="[$branch]" '$3==b {print $1}')
+  [ -z "$target" ] && echo "worktree 없음: $branch" && return 1
+  git worktree remove --force "$target" && echo "삭제됨: $target"
+}
+function wts () {
+  local selected
+  selected=$(git worktree list | fzf --prompt='worktree > ' | awk '{print $1}')
+  [ -n "$selected" ] && cd "$selected"
+}
+
 # ── JWT 디코딩 ────────────────────────────────────────────────
 function jwtd () {
   echo "${1}" | jq -R 'split(".") | .[0],.[1] | @base64d | fromjson'

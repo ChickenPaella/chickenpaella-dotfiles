@@ -1,6 +1,8 @@
 {
   "permissions": {
     "allow": [
+      "Bash(*)",
+      "WebFetch(*)",
       "Bash(ls ~/.config/nvim/lua/plugins/snacks/ && cat ~/.config/nvim/lua/plugins/snacks/*.lua 2>/dev/null)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
@@ -20,7 +22,42 @@
       "Bash(git config:*)",
       "Bash(# 설정 파일들을 dotfiles로 복사\ncp ~/.zshrc ~/dotfiles/config/zsh/.zshrc\ncp ~/.config/tmux/tmux.conf ~/dotfiles/config/tmux/tmux.conf\ncp ~/.config/wezterm/wezterm.lua ~/dotfiles/config/wezterm/wezterm.lua\ncp ~/.config/aerospace/aerospace.toml ~/dotfiles/config/aerospace/aerospace.toml\ncp ~/.config/git/config ~/dotfiles/config/git/config\ncp ~/.config/git/ignore ~/dotfiles/config/git/ignore\n\n# nvim은 디렉토리째로 rsync\nrsync -a --exclude='.git' ~/.config/nvim/ ~/dotfiles/config/nvim/\n\necho \"복사 완료\")",
       "Bash(gh auth:*)",
-      "Bash(gh repo:*)"
+      "Bash(gh repo:*)",
+      "Bash(ln -sf /Users/h-lee/dotfiles/config/zsh/.zshenv ~/.zshenv)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(zsh -c \"source /Users/h-lee/dotfiles/config/zsh/.zshrc 2>&1; echo EXIT:$?\")",
+      "Bash(nvim --headless \"+Lazy! sync\" +qa)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(nvim --headless \"+MasonInstall pyright ruff mypy\" +qa)",
+      "Bash(pip install:*)",
+      "Bash(ruff --version)",
+      "Bash(mypy --version)",
+      "Bash(go version:*)",
+      "Bash(curl -s https://api.github.com/repos/grafana/jsonnet-language-server/releases/latest)",
+      "Bash(curl -L \"https://github.com/grafana/jsonnet-language-server/releases/download/v0.17.0/jsonnet-language-server_0.17.0_darwin_arm64.tar.gz\" -o /tmp/jsonnet-ls.tar.gz)",
+      "Bash(tar xzf:*)",
+      "Bash(mv /tmp/jsonnet-language-server ~/.local/bin/)",
+      "Bash(chmod +x ~/.local/bin/jsonnet-language-server)",
+      "Bash(curl -L \"https://github.com/grafana/jsonnet-language-server/releases/download/v0.17.0/jsonnet-language-server_0.17.0_darwin_arm64\" -o ~/.local/bin/jsonnet-language-server)",
+      "Bash(jsonnet-language-server --version)",
+      "Bash(tmux source-file:*)",
+      "Bash(command -v eza)",
+      "Bash(ln -sf ~/dotfiles/config/zsh/.zshrc ~/.config/zsh/.zshrc)",
+      "Bash(grep -l \"require\\\\|return\" /Users/h-lee/dotfiles/config/nvim/lua/plugins/*/init.lua)",
+      "Bash(cat ~/dotfiles/config/nvim/lua/plugins/lspconfig/*.lua)",
+      "Bash(ls ~/cheatsheet* ~/dotfiles/*.md ~/dotfiles/docs/)",
+      "Bash(find ~/dotfiles -name *.md)",
+      "Bash(pip show:*)",
+      "Bash(pip3 install:*)",
+      "Bash(pip3 show:*)",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(item['type'], item['path']\\) for item in data]\")",
+      "Bash(curl -s https://raw.githubusercontent.com/ChickenPaella/dotfiles/main/bin/__TRACKED_VAR__)",
+      "Bash(curl:*)",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(item['type'], item['path'], item.get\\('size',0\\)\\) for item in data]\")",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(item['type'], item['path']\\) for item in data]\" echo \"===\" gh api 'repos/ChickenPaella/lazyvim-starter/contents/after')",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(item['type'], item['path'], item.get\\('size',0\\)\\) for item in data]\" echo \"===\" gh api 'repos/ChickenPaella/dotfiles/contents/config/tmux')"
     ]
   }
 }
