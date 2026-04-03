@@ -226,6 +226,28 @@ function wts () {
   selected=$(git worktree list | fzf --prompt='worktree > ' | awk '{print $1}')
   [ -n "$selected" ] && cd "$selected"
 }
+function wtvim () {
+  [ -z "$1" ] && echo "사용법: wtvim <브랜치명>" && return 1
+  local branch="$1"
+  local root="$(git rev-parse --show-toplevel)"
+  local project="$(basename "$root")"
+  local safe_branch="${branch//\//-}"
+  local target="$(dirname "$root")/${project}__${safe_branch}"
+
+  # worktree 없으면 생성
+  if ! git worktree list | grep -q "$target"; then
+    wtadd "$branch"
+  fi
+
+  # 현재 세션에 새 window 추가 (tvim 레이아웃: 좌 nvim 70% + 우 터미널 30%)
+  local window_name="${safe_branch}"
+  local session="$(tmux display-message -p '#S')"
+  tmux new-window -t "$session" -n "$window_name" -c "$target"
+  tmux send-keys -t "$session:$window_name" "nvim ." ENTER
+  tmux split-window -t "$session:$window_name" -h -p 30 -c "$target"
+  tmux select-pane -t "$session:$window_name.0"
+  echo "→ window: $window_name"
+}
 
 # ── JWT 디코딩 ────────────────────────────────────────────────
 function jwtd () {
