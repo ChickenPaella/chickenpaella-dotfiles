@@ -33,7 +33,10 @@ export async function parseAliases(): Promise<Alias[]> {
       let command = aliasMatch[2].trim();
       // Strip surrounding quotes
       command = command.replace(/^['"]|['"]$/g, "");
-      aliases.push({ name, command, category: currentCategory });
+      // Skip duplicates (keep first occurrence — from the if-branch, not the else fallback)
+      if (!aliases.some((a) => a.name === name)) {
+        aliases.push({ name, command, category: currentCategory });
+      }
     }
   }
 
@@ -41,12 +44,12 @@ export async function parseAliases(): Promise<Alias[]> {
 }
 
 export function serializeAliases(aliases: Alias[], originalContent: string): string {
-  // Replace each alias line in the original content to preserve comments/structure
   let result = originalContent;
   for (const alias of aliases) {
-    const regex = new RegExp(`^(alias\\s+${escapeRegex(alias.name)}=).*$`, "m");
-    const replacement = `alias ${alias.name}='${alias.command}'`;
-    result = result.replace(regex, replacement);
+    // Match alias with optional leading whitespace (handles if/else indented blocks)
+    // Capture the indent so we can preserve it
+    const regex = new RegExp(`^([ \\t]*)(alias\\s+${escapeRegex(alias.name)}=).*$`, "mg");
+    result = result.replace(regex, (_, indent) => `${indent}alias ${alias.name}='${alias.command}'`);
   }
   return result;
 }

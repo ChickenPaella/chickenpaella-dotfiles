@@ -98,7 +98,7 @@ function KeybindingsContent() {
                 <th className="text-left px-3 py-2 text-[#928374] text-xs font-medium w-24">Source</th>
               </tr></thead>
               <tbody>{(filtered as ZshBinding[]).map((b, i) => (
-                <tr key={i} className={`${i % 2 === 0 ? "" : "bg-[#1d2021]/30"} border-t border-[#3c3836]`}>
+                <tr key={`${b.source}-${b.key}-${b.action}`} className={`${i % 2 === 0 ? "" : "bg-[#1d2021]/30"} border-t border-[#3c3836]`}>
                   <td className="px-3 py-2 text-[#d79921] font-mono">{b.key}</td>
                   <td className="px-3 py-2 text-[#a89984]">{b.action}</td>
                   <td className="px-3 py-2 text-[#504945] text-xs">{b.source}</td>
@@ -116,7 +116,7 @@ function KeybindingsContent() {
                 <th className="text-left px-3 py-2 text-[#928374] text-xs font-medium w-20">Prefix</th>
               </tr></thead>
               <tbody>{(filtered as TmuxBinding[]).map((b, i) => (
-                <tr key={i} className={`${i % 2 === 0 ? "" : "bg-[#1d2021]/30"} border-t border-[#3c3836]`}>
+                <tr key={`${b.key}-${b.command}`} className={`${i % 2 === 0 ? "" : "bg-[#1d2021]/30"} border-t border-[#3c3836]`}>
                   <td className="px-3 py-2 text-[#d79921] font-mono">{b.key}</td>
                   <td className="px-3 py-2 text-[#a89984]">{b.command}</td>
                   <td className="px-3 py-2 text-xs">{b.prefix ? <span className="text-[#458588]">Ctrl+S</span> : <span className="text-[#928374]">none</span>}</td>
@@ -134,7 +134,7 @@ function KeybindingsContent() {
                 <th className="text-left px-3 py-2 text-[#928374] text-xs font-medium w-24">Mode</th>
               </tr></thead>
               <tbody>{(filtered as AerospaceBinding[]).map((b, i) => (
-                <tr key={i} className={`${i % 2 === 0 ? "" : "bg-[#1d2021]/30"} border-t border-[#3c3836]`}>
+                <tr key={`${b.mode}-${b.key}`} className={`${i % 2 === 0 ? "" : "bg-[#1d2021]/30"} border-t border-[#3c3836]`}>
                   <td className="px-3 py-2 text-[#d79921] font-mono">{b.key}</td>
                   <td className="px-3 py-2 text-[#a89984]">{b.action}</td>
                   <td className="px-3 py-2 text-[#504945] text-xs">{b.mode}</td>
@@ -153,7 +153,7 @@ function KeybindingsContent() {
                 <th className="text-left px-3 py-2 text-[#928374] text-xs font-medium w-28">File</th>
               </tr></thead>
               <tbody>{(filtered as NvimKeymap[]).map((b, i) => (
-                <tr key={i} className={`${i % 2 === 0 ? "" : "bg-[#1d2021]/30"} border-t border-[#3c3836]`}>
+                <tr key={`${b.file}-${b.mode}-${b.key}`} className={`${i % 2 === 0 ? "" : "bg-[#1d2021]/30"} border-t border-[#3c3836]`}>
                   <td className="px-3 py-2 text-[#b16286] text-xs font-mono">{b.mode}</td>
                   <td className="px-3 py-2 text-[#d79921] font-mono text-xs">{b.key}</td>
                   <td className="px-3 py-2 text-[#a89984] text-xs">{b.desc || b.action}</td>
@@ -171,7 +171,7 @@ function KeybindingsContent() {
                 <th className="text-left px-3 py-2 text-[#928374] text-xs font-medium">Command</th>
               </tr></thead>
               <tbody>{(filtered as GitAlias[]).map((b, i) => (
-                <tr key={i} className={`${i % 2 === 0 ? "" : "bg-[#1d2021]/30"} border-t border-[#3c3836]`}>
+                <tr key={b.name} className={`${i % 2 === 0 ? "" : "bg-[#1d2021]/30"} border-t border-[#3c3836]`}>
                   <td className="px-3 py-2 text-[#d79921] font-mono">g {b.name}</td>
                   <td className="px-3 py-2 text-[#a89984]">{b.command}</td>
                 </tr>

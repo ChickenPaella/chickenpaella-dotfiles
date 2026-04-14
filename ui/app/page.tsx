@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { parseAliases } from "@/lib/parsers/aliases";
 import { parseTmuxBindings } from "@/lib/parsers/tmux";
 import { parseAerospaceBindings } from "@/lib/parsers/aerospace";
