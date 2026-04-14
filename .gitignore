@@ -11,3 +11,5 @@ config/nvim/.DS_Store
 
 # 시스템
 .DS_Store
+.next/
+node_modules/
