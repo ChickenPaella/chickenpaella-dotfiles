@@ -1,10 +1,10 @@
 return {
   {
     "zbirenbaum/copilot.lua",
-    enabled = false,
+    enabled = vim.env.NVIM_AI == "copilot",
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
-    enabled = false,
+    enabled = vim.env.NVIM_AI == "copilot",
   },
 }

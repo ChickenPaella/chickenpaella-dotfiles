@@ -221,5 +221,5 @@ vim.filetype.add({
 })
 
 if vim.env.PYENV_ROOT then
-  vim.g.python3_host_prog = vim.env.PYENV_ROOT .. "/versions/global/bin/python"
+  vim.g.python3_host_prog = vim.env.PYENV_ROOT .. "/shims/python3"
 end

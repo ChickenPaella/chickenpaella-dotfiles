@@ -1,5 +1,6 @@
 return {
   "Exafunction/codeium.vim",
+  enabled = vim.env.NVIM_AI ~= "copilot",
   event = "InsertEnter",
   config = function()
     vim.keymap.set("i", "<A-y>", function() return vim.fn["codeium#Accept"]() end,

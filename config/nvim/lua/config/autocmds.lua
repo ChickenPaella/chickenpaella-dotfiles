@@ -10,7 +10,9 @@
 vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
   pattern = "*",
   callback = function()
-    vim.cmd("silent! wa")
+    if vim.bo.buftype == "" and vim.bo.modifiable then
+      vim.cmd("silent! wa")
+    end
   end,
   desc = "자동 저장",
 })

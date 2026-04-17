@@ -6,5 +6,6 @@ return {
   { "<leader>cs", "<cmd>Lspsaga signature_help<cr>", desc = "Signature Help" },
   { "gh", "<cmd>Lspsaga peek_definition<cr>", desc = "Peek Definition" },
   { "gd", "<cmd>Lspsaga goto_definition<cr>", desc = "Goto Definition" },
+  { "gr", "<cmd>Lspsaga finder<cr>", desc = "References (Finder)" },
 }
 

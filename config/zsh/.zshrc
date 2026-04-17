@@ -79,3 +79,6 @@ DOTFILES_ZSH="${DOTFILES:-$HOME/dotfiles}/config/zsh"
 
 # ── 기기별 설정 (API 키, 회사 전용 등) ───────────────────────
 [[ -f ~/.config/zsh/local_rc.zsh ]] && source ~/.config/zsh/local_rc.zsh
+
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh

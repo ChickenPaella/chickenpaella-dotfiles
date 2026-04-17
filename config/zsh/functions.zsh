@@ -73,19 +73,20 @@ function tvim() {
   local dir="${1:-.}"
   cd "$dir"
   local workdir="$(basename $PWD)"
+  local session="${workdir//[^a-zA-Z0-9_-]/_}"
   # 이미 세션 있으면 그냥 붙기
-  if tmux has-session -t "=$workdir" 2>/dev/null; then
-    tmux switch-client -t "$workdir" 2>/dev/null || tmux attach -t "$workdir"
+  if tmux has-session -t "=$session" 2>/dev/null; then
+    tmux switch-client -t "$session" 2>/dev/null || tmux attach -t "$session"
     return 0
   fi
   # 새 세션: 좌(nvim) + 우(터미널) 레이아웃
-  tmux new-session -s "$workdir" -d
-  tmux send-keys -t "$workdir" "nvim ." ENTER
+  tmux new-session -s "$session" -d
+  tmux send-keys -t "$session" "nvim ." ENTER
   # 오른쪽에 터미널 패널 추가 (전체 너비의 30%)
-  tmux split-window -t "$workdir" -h -p 30
+  tmux split-window -t "$session" -h -p 30
   # 포커스를 nvim 패널(왼쪽)로 되돌리기
-  tmux select-pane -t "$workdir:.0"
-  tmux switch-client -t "$workdir" 2>/dev/null || tmux attach -t "$workdir"
+  tmux select-pane -t "$session:.0"
+  tmux switch-client -t "$session" 2>/dev/null || tmux attach -t "$session"
 }
 
 # ── 압축 해제 (tar/zip/gz 등 자동 감지) ──────────────────────
