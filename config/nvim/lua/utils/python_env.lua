@@ -11,8 +11,21 @@ local function detect()
   local sys = vim.loop.os_uname().sysname
   local is_wsl = sys == "Linux" and vim.fn.has("wsl") == 1
 
+  local sep = sys == "Windows_NT" and "\\" or "/"
+
   ------------------------------------------------------------------
-  -- 2) Poetry venv (works in WSL)
+  -- 2) .venv in project root (fast filesystem check first)
+  ------------------------------------------------------------------
+  local venv_dir = project_root .. sep .. ".venv"
+
+  if vim.fn.isdirectory(venv_dir) == 1 then
+    local bin = venv_dir .. sep .. (sys == "Windows_NT" and "Scripts\\python.exe" or "bin/python")
+
+    return bin, vim.fn.fnamemodify(bin, ":t")
+  end
+
+  ------------------------------------------------------------------
+  -- 3) Poetry venv (fallback, slow shell command)
   ------------------------------------------------------------------
   local poetry_cmd = "cd " .. project_root .. " && poetry env info -p"
   local p = vim.fn.trim(vim.fn.system(poetry_cmd))
@@ -21,18 +34,6 @@ local function detect()
     local bin = sys == "Windows_NT" and (p .. "\\Scripts\\python.exe") or (p .. "/bin/python")
 
     return bin, vim.fn.fnamemodify(p, ":t")
-  end
-
-  ------------------------------------------------------------------
-  -- 3) .venv in project root
-  ------------------------------------------------------------------
-  local sep = sys == "Windows_NT" and "\\" or "/"
-  local venv_dir = project_root .. sep .. ".venv"
-
-  if vim.fn.isdirectory(venv_dir) == 1 then
-    local bin = venv_dir .. sep .. (sys == "Windows_NT" and "Scripts\\python.exe" or "bin/python")
-
-    return bin, vim.fn.fnamemodify(bin, ":t")
   end
 
   ------------------------------------------------------------------
