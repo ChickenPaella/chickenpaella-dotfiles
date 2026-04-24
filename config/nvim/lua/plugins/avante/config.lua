@@ -41,7 +41,6 @@ return {
     --- For file_selector providers
     "nvim-mini/mini.pick",
     "nvim-telescope/telescope.nvim",
-    "ibhagwan/fzf-lua",
 
     --- For input providers
     "folke/snacks.nvim",
