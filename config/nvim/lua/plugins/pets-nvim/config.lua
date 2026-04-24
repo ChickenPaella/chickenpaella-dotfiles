@@ -1,9 +1,6 @@
 return {
   "giusgad/pets.nvim",
-  dependencies = {
-    "MunifTanjim/nui.nvim",
-    "edluffy/hologram.nvim",
-  },
+  dependencies = { "MunifTanjim/nui.nvim" },
   cmd = { "PetsNew", "PetsList", "PetsKill", "PetsKillAll", "PetsPauseToggle", "PetsHideToggle" },
   opts = {
     row = 1,           -- distance from bottom of screen
