@@ -42,6 +42,18 @@ return {
         -- python_venv,
         -- git_branch,
       })
+
+      -- Winbar: show full path (~/... form) at top of each window
+      opts.winbar = {
+        lualine_c = {
+          { "filename", path = 4, shorting_target = 60, symbols = { modified = " ●", readonly = " " } },
+        },
+      }
+      opts.inactive_winbar = {
+        lualine_c = {
+          { "filename", path = 4, shorting_target = 60 },
+        },
+      }
     end,
   },
 }

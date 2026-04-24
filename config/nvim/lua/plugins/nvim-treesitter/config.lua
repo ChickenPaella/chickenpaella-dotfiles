@@ -53,6 +53,18 @@ return {
       opts.indent = opts.indent or {}
       opts.indent.disable = { "python", "yaml" }
 
+      opts.textobjects = opts.textobjects or {}
+      opts.textobjects.move = {
+        enable = true,
+        set_jumps = true,
+        goto_next_start = {
+          ["<A-j>"] = { query = { "@function.outer", "@class.outer" }, desc = "Next function/class" },
+        },
+        goto_previous_start = {
+          ["<A-k>"] = { query = { "@function.outer", "@class.outer" }, desc = "Prev function/class" },
+        },
+      }
+
       return opts
     end,
   },
