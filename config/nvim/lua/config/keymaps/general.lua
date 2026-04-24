@@ -10,11 +10,11 @@ M.create_keymaps = function()
     if path == "" then
       vim.notify("No file path", vim.log.levels.WARN)
     else
-      local rel_path = vim.fn.fnamemodify(path, ":.p")
-      vim.fn.setreg("+", rel_path) -- Copy to system clipboard
-      print("Copied: " .. rel_path)
+      local full_path = vim.fn.fnamemodify(path, ":p")
+      vim.fn.setreg("+", full_path)
+      vim.notify(full_path, vim.log.levels.INFO, { title = "Full Path (copied)" })
     end
-  end, { desc = "Copy Relative Path to Clipboard" })
+  end, { desc = "Copy Full Path to Clipboard" })
 end
 
 return M
