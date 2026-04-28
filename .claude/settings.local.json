@@ -57,7 +57,8 @@
       "Bash(curl:*)",
       "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(item['type'], item['path'], item.get\\('size',0\\)\\) for item in data]\")",
       "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(item['type'], item['path']\\) for item in data]\" echo \"===\" gh api 'repos/ChickenPaella/lazyvim-starter/contents/after')",
-      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(item['type'], item['path'], item.get\\('size',0\\)\\) for item in data]\" echo \"===\" gh api 'repos/ChickenPaella/dotfiles/contents/config/tmux')"
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(item['type'], item['path'], item.get\\('size',0\\)\\) for item in data]\" echo \"===\" gh api 'repos/ChickenPaella/dotfiles/contents/config/tmux')",
+      "Skill(update-config)"
     ]
   }
 }
