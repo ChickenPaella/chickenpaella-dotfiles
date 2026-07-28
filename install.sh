@@ -35,6 +35,7 @@ brew install \
   tree \
   lazygit \
   ruff \
+  imagemagick \
   zsh-autosuggestions \
   zsh-syntax-highlighting
 
